@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: pd_calls_db
+    database: AwsDataCatalog
+    schema: pd_calls_db
+    tables:
+      - name: pd_calls_raw
+        description: "Raw csv data"
+
+models:
+  - name: stg_pd_calls
+    description: "Cleaned/typed calls"
+    columns:
+      - name: call_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: event_number
+        description: "PD identifier"
+        tests:
+          - not_null
+      - name: call_received_at
+        description: "Timestamp call received"
+        tests:
+          - not_null

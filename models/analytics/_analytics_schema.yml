@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: fct_calls
+    description: "Fact table - one row per call (service)"
+  - name: dim_tencodes
+    description: "Dimension table - tencode statistics and geocoding rates"
+  - name: dim_dispositions
+    description: "Dimension table - disposition outcomes and patterns"

@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: transformed_calls
+    description: "Calls + temporal features + disposition categories"
