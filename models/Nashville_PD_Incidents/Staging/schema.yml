@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_incidents
+    description: Staged incident data with cleaning and quality flags
+    columns:
+      - name: incident_id
+        description: Unique incident identifier
+        tests:
+          - not_null
+          - unique
+      
+      - name: incident_number
+        description: Police incident report number
+        tests:
+          - not_null
+      
+      - name: victim_gender
+        description: Cleaned victim gender (M/F/U)
+        tests:
+          - accepted_values:
+              values: ['M', 'F', 'U']
+              config:
+                severity: warn
+                where: "victim_gender is not null"
+      
+      - name: victim_race
+        description: Cleaned victim race code
+        tests:
+          - accepted_values:
+              values: ['W', 'B', 'A', 'I', 'U']
+              config:
+                severity: warn
+                where: "victim_race is not null"

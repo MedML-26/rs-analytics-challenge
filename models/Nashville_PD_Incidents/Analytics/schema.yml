@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: fct_incidents
+    description: Core fact table with all incident records and metrics
+    columns:
+      - name: incident_id
+        description: Unique incident identifier
+        tests:
+          - not_null
+          - unique
+      
+      - name: incident_occurred_at
+        description: Timestamp when incident occurred
+        tests:
+          - not_null
+
+  - name: agg_daily_incidents
+    description: Daily aggregated incident statistics
+    columns:
+      - name: incident_date
+        description: Date of incidents
+        tests:
+          - not_null
+          - unique
+
+  - name: agg_geographic_hotspots
+    description: Geographic aggregation by zone and location
+    columns:
+      - name: total_incidents
+        description: Total incidents in this area
+        tests:
+          - not_null
+
+  - name: dim_offenses
+    description: Offense dimension with statistics
+    columns:
+      - name: offense_description
+        description: Original offense description
+        tests:
+          - not_null

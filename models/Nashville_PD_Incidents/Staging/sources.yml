@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: nashville_incidents
+    description: Raw Nashville PD incident reports from Athena
+    schema: nashville_incidents
+    tables:
+      - name: incidents_raw
+        description: Raw incident data (859K records, 2019-2026)
+        columns:
+          - name: objectid
+            description: Unique incident identifier
+            tests:
+              - not_null
+              - unique
+          
+          - name: incident_number
+            description: Police incident report number
+          
+          - name: incident_occurred
+            description: Timestamp when incident occurred
+          
+          - name: latitude
+            description: Latitude coordinate
+          
+          - name: longitude
+            description: Longitude coordinate
