@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw_data
+    description: Raw healthcare data from S3
+    database: healthcare_analytics
+    schema: healthcare_analytics
+    tables:
+      - name: nchs_raw
+        description: NCHS injury mortality data (nested JSON)
+        
+      - name: manual
+        description: NHTSA crash data (CSV files 2019-2023)

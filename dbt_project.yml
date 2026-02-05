@@ -1,44 +1,25 @@
-name: 'rs_analytics_challenge'
+name: 'healthcare_analytics'
 version: '1.0.0'
 config-version: 2
 
-profile: 'rs_analytics_challenge'
+profile: 'healthcare_analytics'
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 
 clean-targets:
   - "target"
   - "dbt_packages"
 
 models:
-  rs_analytics_challenge:
-    # PD Calls models (existing)
-    PD_calls:
-      staging:
-        +materialized: view
-        +schema: calls_staging
-      transformed:
-        +materialized: table
-        +schema: calls_transformed
-      analytics:
-        +materialized: table
-        +schema: calls_analytics
-    
-    # Nashville PD Incidents models (new)
-    Nashville_PD_Incidents:
-      Staging:
-        +materialized: view
-        +schema: incidents_staging
-      Transformed:
-        +materialized: table
-        +schema: incidents_transformed
-      Analytics:
-        +materialized: table
-        +schema: incidents_analytics
-
-vars:
-  current_date: '2026-02-04'
+  healthcare_analytics:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
