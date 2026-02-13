@@ -7,7 +7,7 @@
 
 with source as (
 
-    select * from {{ source('raw_grid', 'grid_incidents') }}
+    select * from {{ source('raw_gtd', 'gtd_events') }}
 
 ),
 
