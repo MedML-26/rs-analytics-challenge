@@ -1,10 +1,10 @@
-unified_code	unified_label	level_2	level_1	gtd_attacktype_txt	grid_tactic_flag
-BOMB	Bombing/Explosion	EXPLOSIVE	ARMED_ATTACK	Bombing/Explosion	tactic_lvl1_ex
-ARMED	Armed Assault	FIREARMS	ARMED_ATTACK	Armed Assault	tactic_lvl1_as
-ASSASSIN	Assassination	TARGETED	ARMED_ATTACK	Assassination	tactic_lvl1_as
-KIDNAP	Hostage Taking (Kidnapping)	COERCIVE	HOSTAGE	Hostage Taking (Kidnapping)	tactic_lvl1_co
-BARRICADE	Hostage Taking (Barricade)	COERCIVE	HOSTAGE	Hostage Taking (Barricade Incident)	tactic_lvl1_co
-FACILITY	Facility/Infrastructure Attack	SABOTAGE	PROPERTY	Facility/Infrastructure Attack	tactic_lvl1_ex
-HIJACK	Hijacking	COERCIVE	HOSTAGE	Hijacking	tactic_lvl1_co
-UNCONV	Unconventional Attack	UNCONVENTIONAL	UNCONVENTIONAL	Unarmed Assault	tactic_lvl1_cv
-UNKNOWN	Unknown	UNKNOWN	UNKNOWN	Unknown	tactic_lvl1_un
+unified_code,unified_label,level_2,level_1,gtd_attacktype_txt,grid_tactic_flag
+BOMB,Bombing/Explosion,EXPLOSIVE,ARMED_ATTACK,Bombing/Explosion,tactic_lvl1_ex
+ARMED,Armed Assault,FIREARMS,ARMED_ATTACK,Armed Assault,tactic_lvl1_as
+ASSASSIN,Assassination,TARGETED,ARMED_ATTACK,Assassination,tactic_lvl1_as
+KIDNAP,Hostage Taking (Kidnapping),COERCIVE,HOSTAGE,Hostage Taking (Kidnapping),tactic_lvl1_co
+BARRICADE,Hostage Taking (Barricade),COERCIVE,HOSTAGE,Hostage Taking (Barricade Incident),tactic_lvl1_co
+FACILITY,Facility/Infrastructure Attack,SABOTAGE,PROPERTY,Facility/Infrastructure Attack,tactic_lvl1_ex
+HIJACK,Hijacking,COERCIVE,HOSTAGE,Hijacking,tactic_lvl1_co
+UNCONV,Unconventional Attack,UNCONVENTIONAL,UNCONVENTIONAL,Unarmed Assault,tactic_lvl1_cv
+UNKNOWN,Unknown,UNKNOWN,UNKNOWN,Unknown,tactic_lvl1_un

@@ -9,6 +9,6 @@ select
     try(date_parse(publication_date, '%Y-%m-%d')) as publication_date,
     publication                      as media_outlet,
     'GRID'                                  as source_dataset,
-    current_timestamp                       as _dbt_loaded_at
+    cast(now() as timestamp)                       as _dbt_loaded_at
 
 from {{ source('raw_grid', 'grid_sources') }}

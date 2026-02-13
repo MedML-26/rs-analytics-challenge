@@ -7,7 +7,7 @@
 
 with source as (
 
-    select * from {{ source('raw_gtd', 'gtd_events') }}
+    select * from {{ source('raw_grid', 'grid_incidents') }}
 
 ),
 
@@ -133,6 +133,6 @@ select
 
     -- Provenance
     'GRID'                                  as source_dataset,
-    current_timestamp                       as _dbt_loaded_at
+    cast(now() as timestamp)                       as _dbt_loaded_at
 
 from taxonomy_extracted

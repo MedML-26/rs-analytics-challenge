@@ -8,7 +8,7 @@
 
 with source as (
 
-    select * from {{ source('raw_gtd', 'gtd_incidents') }}
+    select * from {{ source('raw_gtd', 'gtd_events') }}
 
 ),
 
@@ -151,6 +151,6 @@ select
 
     -- Provenance
     'GTD'                                   as source_dataset,
-    current_timestamp                       as _dbt_loaded_at
+    cast(now() as timestamp)                       as _dbt_loaded_at
 
 from middle_east_filtered
