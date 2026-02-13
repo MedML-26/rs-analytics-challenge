@@ -1,0 +1,14 @@
+unified_code	unified_label	level_2	level_1	gtd_weaptype_txt	grid_weapon_flag
+EXPLOSIVE	Explosives	EXPLOSIVE	LETHAL	Explosives	weapon_lvl1_ex
+FIREARM	Firearms	FIREARMS	LETHAL	Firearms	weapon_lvl1_fi
+INCENDIARY	Incendiary	INCENDIARY	LETHAL	Incendiary	weapon_lvl1_in
+MELEE	Melee	IMPACT	LETHAL	Melee	weapon_lvl1_im
+CHEMICAL	Chemical	CBRN	WMD	Chemical	weapon_lvl1_ot
+BIOLOGICAL	Biological	CBRN	WMD	Biological	weapon_lvl1_ot
+RADIOLOGICAL	Radiological	CBRN	WMD	Radiological	weapon_lvl1_ot
+VEHICLE	Vehicle	IMPACT	LETHAL	Vehicle (not to include vehicle-borne explosives)	weapon_lvl1_im
+SABOTAGE	Sabotage Equipment	OTHER	NON_LETHAL	Sabotage Equipment	weapon_lvl1_ot
+FAKE	Fake Weapons	OTHER	NON_LETHAL	Fake Weapons	weapon_lvl1_ot
+MISSILE	Missile/Launcher	MISSILE	LETHAL	Other	weapon_lvl1_ml
+UAV	Unmanned Aerial	UNMANNED	LETHAL	Other	weapon_lvl1_ua
+UNKNOWN	Unknown	UNKNOWN	UNKNOWN	Unknown	weapon_lvl1_un

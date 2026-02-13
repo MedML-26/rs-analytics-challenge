@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: raw_data
     description: Raw healthcare data from S3
-    database: healthcare_analytics
+    database: awsdatacatalog
     schema: healthcare_analytics
     tables:
       - name: nchs_raw

@@ -1,8 +1,8 @@
-name: 'healthcare_analytics'
+name: 'rs-analytics-challenge'
 version: '1.0.0'
 config-version: 2
 
-profile: 'healthcare_analytics'
+profile: 'terrorism-analytics'
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -14,12 +14,42 @@ snapshot-paths: ["snapshots"]
 clean-targets:
   - "target"
   - "dbt_packages"
-
+vars:
+  terrorism_overlap_start: '2018-01-01'
+  terrorism_overlap_end: '2020-12-31'
+  me_countries:
+    - 'Iraq'
+    - 'Syria'
+    - 'Yemen'
+    - 'Libya'
+    - 'Egypt'
+    - 'Saudi Arabia'
+    - 'Lebanon'
+    - 'Jordan'
+    - 'Israel'
+    - 'West Bank and Gaza Strip'
+    - 'Turkey'
+    - 'Iran'
+    - 'Bahrain'
+    - 'Kuwait'
+    - 'United Arab Emirates'
+    - 'Qatar'
+  default_temporal_window_days: 3
+  default_spatial_window_km: 15
 models:
-  healthcare_analytics:
-    staging:
-      +materialized: view
-      +schema: staging
-    marts:
-      +materialized: table
-      +schema: marts
+  terrorism-analytics:
+      staging:
+        +materialized: view
+        +schema: terrorism_staging
+        +tags: ['terrorism', 'staging']
+      transformed:
+        +materialized: table
+        +schema: terrorism_transformed
+        +tags: ['terrorism', 'transformed']
+      analytics:
+        +materialized: table
+        +schema: terrorism_analytics
+        +tags: ['terrorism', 'analytics']
+seeds:
+  terrorism-analytics:
+    +schema: seeds

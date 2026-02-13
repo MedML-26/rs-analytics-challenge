@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: trn_meltt_matches
+    description: >
+      Enriched MELTT match records. Each row is a confirmed duplicate:
+      one real-world incident recorded in both GTD and GRID, with
+      fields selected from the higher-priority source per the
+      field-level decision rules.
+    columns:
+      - name: match_id
+        tests:
+          - unique
+          - not_null
+      - name: gtd_event_id
+        tests:
+          - not_null
+      - name: grid_event_id
+        tests:
+          - not_null
+
+  - name: trn_unified_events
+    description: >
+      Core analytical table: every deduplicated terrorism incident
+      in the Middle East. MATCHED + GTD_ONLY + GRID_ONLY events.
+    columns:
+      - name: record_type
+        tests:
+          - accepted_values:
+              values: ['MATCHED', 'GTD_ONLY', 'GRID_ONLY']
+
+  - name: trn_us_targeted_events
+    description: >
+      Subset of unified events targeting US soldiers/personnel.
+      Uses four detection pathways: nationality, casualties,
+      military target type, and narrative keyword search.
+    columns:
+      - name: is_us_targeted
+        tests:
+          - accepted_values:
+              values: [true]
+
+  - name: trn_cr_event_counts
+    description: >
+      Raw event counts (n1, n2, m) at global, country, year, and
+      country×year granularity for the 2018–2020 overlap period.
+    columns:
+      - name: stratum_type
+        tests:
+          - accepted_values:
+              values: ['GLOBAL', 'COUNTRY', 'YEAR', 'COUNTRY_YEAR']
+      - name: n1_gtd
+        tests:
+          - not_null
+      - name: n2_grid
+        tests:
+          - not_null
+
+  - name: trn_cr_chapman_estimates
+    description: >
+      Chapman bias-corrected capture-recapture estimates at all
+      stratification levels. When dependence_ratio > 1, both
+      datasets share media sources and N̂ is a lower bound.
+    columns:
+      - name: stratum_key
+        tests:
+          - not_null
+      - name: n_hat
+        description: "Estimated total events including unobserved"
+      - name: coverage_combined
+        description: "Fraction of estimated total that we actually observe"

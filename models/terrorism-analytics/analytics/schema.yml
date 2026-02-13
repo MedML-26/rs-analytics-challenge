@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: anl_terrorism_summary
+    description: >
+      Primary analytical table: terrorism events aggregated by
+      country and year, with capture-recapture estimates joined
+      from the COUNTRY_YEAR stratum. Main table for dashboards.
+    columns:
+      - name: country
+        tests:
+          - not_null
+      - name: event_year
+        tests:
+          - not_null
+      - name: total_events
+        tests:
+          - not_null
+
+  - name: anl_us_attack_analysis
+    description: >
+      US-targeted attack summary by country and year. Includes
+      detection pathway breakdown, perpetrator analysis, and
+      data source provenance (both/GTD-only/GRID-only).
+    columns:
+      - name: country
+        tests:
+          - not_null
+      - name: event_year
+        tests:
+          - not_null
+      - name: us_targeted_events
+        tests:
+          - not_null
+
+  - name: anl_capture_recapture_summary
+    description: >
+      Executive summary: global Chapman estimate, country with
+      largest data gap, sensitivity analysis range. Single-row
+      output for top-level reporting.
+    columns:
+      - name: report_section
+        tests:
+          - accepted_values:
+              values: ['GLOBAL_SUMMARY']
+      - name: estimated_total_events
+        description: "Chapman N̂ — estimated true event count including unobserved"

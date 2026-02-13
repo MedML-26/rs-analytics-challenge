@@ -1,0 +1,168 @@
+version: 2
+
+sources:
+  - name: raw_gtd
+    description: >
+      Global Terrorism Database (START, University of Maryland).
+      Event-level data on terrorist attacks worldwide, 1970–2020.
+      Requires 2-of-3 inclusion criteria (political goal, audience
+      intimidation, outside international humanitarian law).
+    database: awsdatacatalog
+    schema: terrorism_db          # ← your Glue database for raw GTD CSV
+    tables:
+      - name: gtd_events
+        description: >
+          One row per terrorist incident. 200,000+ records, 135+ columns.
+          Key fields: iyear/imonth/iday (date components), latitude/longitude,
+          attacktype1_txt, weaptype1_txt, targtype1_txt, gname (perpetrator),
+          nkill/nwound (casualties), nkillus/nwoundus (US-specific casualties).
+        columns:
+          - name: eventid
+            description: "12-digit GTD Event ID: yyyymmdd + 4-digit sequence"
+            tests:
+              - unique
+              - not_null
+          - name: iyear
+            description: "Year of incident (1970–2020)"
+          - name: imonth
+            description: "Month of incident (0 = unknown)"
+          - name: iday
+            description: "Day of incident (0 = unknown)"
+          - name: country_txt
+            description: "Country name (e.g. 'Iraq', 'West Bank and Gaza Strip')"
+          - name: latitude
+            description: "WGS84 latitude"
+          - name: longitude
+            description: "WGS84 longitude"
+          - name: attacktype1_txt
+            description: "Primary attack type (9 categories)"
+          - name: weaptype1_txt
+            description: "Primary weapon type (13 categories)"
+          - name: targtype1_txt
+            description: "Primary target/victim type (22 categories)"
+          - name: nkill
+            description: "Total fatalities"
+          - name: nkillus
+            description: "US citizen fatalities"
+          - name: nwound
+            description: "Total non-fatal injuries"
+          - name: nwoundus
+            description: "US citizen non-fatal injuries"
+          - name: gname
+            description: "Perpetrator group name"
+          - name: natlty1_txt
+            description: "Nationality of primary target/victim"
+
+  - name: raw_grid
+    description: >
+      GTTAC/GRID Record of Incident Database (DSG / Dept of State).
+      Terrorism incidents 2018–present. Requires ALL THREE criteria.
+      Distributed as 3 CSV files: incidents, perpetrators, sources.
+    database: awsdatacatalog
+    schema: terrorism_db          # ← your Glue database for raw GRID CSVs
+    tables:
+      - name: grid_incidents
+        description: >
+          One row per incident. 309 columns using binary flags for 6
+          taxonomy dimensions: tactics, weapons, logistics, victims,
+          intended victims, facilities. US casualty fields included.
+        columns:
+          - name: unique_incident_id
+            description: "9-digit unique incident identifier"
+            tests:
+              - unique
+              - not_null
+          - name: incident_date
+            description: "Date of incident"
+          - name: incident_year
+            description: "Year of incident"
+          - name: country_genc_txt
+            description: "Country name (GENC standard)"
+          - name: latitude
+            description: "WGS84 latitude"
+          - name: longitude
+            description: "WGS84 longitude"
+          - name: num_killed
+            description: "Total killed"
+          - name: num_killed_us
+            description: "US citizens killed"
+          - name: num_wounded
+            description: "Total wounded"
+          - name: num_wounded_us
+            description: "US citizens wounded"
+          - name: is_suicide
+            description: "1 if suicide tactic"
+          - name: is_ied
+            description: "1 if IED used"
+          - name: summary
+            description: "Incident narrative summary"
+
+      - name: grid_perps
+        description: >
+          One row per perpetrator per incident. Links to grid_incidents
+          via unique_incident_id. Contains ideology category flags.
+        columns:
+          - name: perp_incident_id
+            description: "Unique perpetrator-incident identifier"
+            tests:
+              - unique
+              - not_null
+          - name: unique_incident_id
+            description: "FK to grid_incidents"
+          - name: perp_cd
+            description: "Perpetrator code"
+          - name: perp_name
+            description: "Perpetrator organization name"
+
+      - name: grid_sources
+        description: >
+          One row per source per incident. Used for provenance tracking.
+        columns:
+          - name: unique_incident_id
+            description: "FK to grid_incidents"
+          - name: headline
+            description: "Article headline"
+          - name: publication_source
+            description: "Media outlet name"
+
+  - name: meltt_outputs
+    description: >
+      Output tables from MELTT matching executed in Databricks.
+      Written to S3/Athena by the capture-recapture notebook.
+    database: awsdatacatalog
+    schema: terrorism_db   # ← Glue database for MELTT outputs
+    tables:
+      - name: meltt_matched_pairs
+        description: >
+          Each row is a matched pair: one GTD event ID and one GRID
+          event ID that MELTT determined refer to the same incident.
+        columns:
+          - name: match_id
+            tests:
+              - unique
+              - not_null
+          - name: gtd_eventid
+            description: "GTD event ID of matched record"
+          - name: grid_unique_incident_id
+            description: "GRID unique_incident_id of matched record"
+          - name: match_date
+            description: "Date used for the match"
+          - name: spatial_distance_km
+            description: "Haversine distance between coordinates"
+          - name: temporal_distance_days
+            description: "Day difference between event dates"
+          - name: taxonomy_score
+            description: "Weighted taxonomy similarity score"
+          - name: country
+            description: "Country (GTD naming convention)"
+
+      - name: meltt_sensitivity_grid
+        description: >
+          Sensitivity analysis results: match counts and quality metrics
+          across temporal (1–5 days) × spatial (3–25 km) windows.
+        columns:
+          - name: temporal_window_days
+          - name: spatial_window_km
+          - name: n_matches
+          - name: precision
+          - name: recall

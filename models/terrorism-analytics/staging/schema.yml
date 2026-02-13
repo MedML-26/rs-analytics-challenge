@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: stg_gtd_incidents
+    description: >
+      Standardized GTD incident data filtered to Middle East countries.
+      Constructs dates from iyear/imonth/iday, cleans coordinates,
+      selects analysis-ready columns.
+    columns:
+      - name: event_id
+        description: "GTD event ID (12-digit string)"
+        tests:
+          - unique
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+
+  - name: stg_grid_incidents
+    description: >
+      Standardized GRID incident data. GENC country names normalized
+      to GTD convention. Primary tactic and weapon extracted from
+      binary flag columns.
+    columns:
+      - name: event_id
+        description: "GRID unique_incident_id (9-digit string)"
+        tests:
+          - unique
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+
+  - name: stg_grid_perpetrators
+    description: >
+      GRID perpetrator data with ideology extracted from ICat flags.
+      One row per perpetrator per incident.
+    columns:
+      - name: perp_incident_id
+        tests:
+          - unique
+          - not_null
+      - name: event_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_grid_incidents')
+              field: event_id
+
+  - name: stg_grid_sources
+    description: >
+      GRID media source citations for provenance tracking.
+    columns:
+      - name: event_id
+        tests:
+          - not_null

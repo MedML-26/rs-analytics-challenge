@@ -1,0 +1,16 @@
+unified_code	unified_label	level_2	level_1	gtd_targtype_txt
+BUSINESS	Business	ECONOMIC	SOFT_TARGET	Business
+GOVERNMENT	Government (General)	GOVERNMENT	HARD_TARGET	Government (General)
+POLICE	Police	SECURITY	HARD_TARGET	Police
+MILITARY	Military	SECURITY	HARD_TARGET	Military
+PRIVATE	Private Citizens & Property	CIVILIAN	SOFT_TARGET	Private Citizens & Property
+TRANSPORT	Transportation	INFRASTRUCTURE	SOFT_TARGET	Transportation
+UTILITIES	Utilities	INFRASTRUCTURE	SOFT_TARGET	Utilities
+DIPLOMATIC	Government (Diplomatic)	GOVERNMENT	HARD_TARGET	Government (Diplomatic)
+EDUCATION	Educational Institution	CIVILIAN	SOFT_TARGET	Educational Institution
+RELIGIOUS	Religious Figures/Institutions	CIVILIAN	SOFT_TARGET	Religious Figures/Institutions
+JOURNALISTS	Journalists & Media	CIVILIAN	SOFT_TARGET	Journalists & Media
+NGO	NGO	CIVILIAN	SOFT_TARGET	NGO
+TELECOM	Telecommunication	INFRASTRUCTURE	SOFT_TARGET	Telecommunication
+TOURISTS	Tourists	CIVILIAN	SOFT_TARGET	Tourists
+OTHER	Other	OTHER	OTHER	Other

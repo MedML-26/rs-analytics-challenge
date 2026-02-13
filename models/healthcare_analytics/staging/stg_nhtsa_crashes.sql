@@ -5,37 +5,58 @@
     )
 }}
 
-WITH source AS (
-    SELECT * FROM {{ source('raw_data', 'manual') }}
-)
-
 SELECT
-    CAST(year AS INTEGER) AS crash_year,
-    CAST(month AS INTEGER) AS crash_month,
-    CAST(day AS INTEGER) AS crash_day,
-    CAST(hour AS INTEGER) AS crash_hour,
-    CAST(minute AS INTEGER) AS crash_minute,
-    CAST(day_week AS INTEGER) AS day_of_week,
+    -- Crash identifiers
+    year AS crash_year,
+    month AS crash_month,
+    monthname AS crash_month_name,
+    day AS crash_day,
+    dayname AS crash_day_name,
+    hour AS crash_hour,
+    hourname AS crash_hour_name,
+    minute AS crash_minute,
+    day_week AS day_of_week,
+    day_weekname AS day_of_week_name,
     
-    CAST(state AS INTEGER) AS state_fips,
+    -- Location
+    state AS state_fips,
     statename AS state_name,
-    CAST(county AS INTEGER) AS county_fips,
-    CAST(rur_urb AS INTEGER) AS rural_urban_code,
+    county AS county_fips,
+    countyname AS county_name,
+    city AS city_fips,
+    cityname AS city_name,
+    rur_urb AS rural_urban_code,
+    rur_urbname AS rural_urban_name,
+    latitude,
+    longitud AS longitude,
     
+    -- Crash details
     st_case AS case_number,
-    CAST(fatals AS INTEGER) AS fatalities,
-    CAST(drunk_dr AS INTEGER) AS drunk_drivers,
-    CAST(persons AS INTEGER) AS total_persons,
-    CAST(ve_total AS INTEGER) AS vehicles_involved,
+    fatals AS fatalities,
+    drunk_dr AS drunk_drivers,
+    persons AS total_persons,
+    ve_total AS vehicles_involved,
+    ve_forms AS vehicle_forms,
+    peds AS pedestrians,
     
-    CAST(man_coll AS INTEGER) AS manner_of_collision,
-    CAST(lgt_cond AS INTEGER) AS light_condition,
-    CAST(weather AS INTEGER) AS weather_condition,
-    CAST(harm_ev AS INTEGER) AS first_harmful_event,
+    -- Crash characteristics
+    man_coll AS manner_of_collision,
+    man_collname AS manner_of_collision_name,
+    lgt_cond AS light_condition,
+    lgt_condname AS light_condition_name,
+    weather AS weather_condition,
+    weathername AS weather_condition_name,
+    harm_ev AS first_harmful_event,
+    harm_evname AS first_harmful_event_name,
     
-    timestamp AS crash_timestamp
+    -- Additional factors
+    rel_road AS relation_to_road,
+    rel_roadname AS relation_to_road_name,
+    wrk_zone AS work_zone,
+    wrk_zonename AS work_zone_name,
+    sch_bus AS school_bus_related,
+    sch_busname AS school_bus_related_name
 
-FROM source
+FROM {{ source('raw_data', 'manual') }}
 WHERE year IS NOT NULL
-  AND state IS NOT NULL
   AND year BETWEEN 2019 AND 2023
